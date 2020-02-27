@@ -17,20 +17,25 @@ public class MainActivity extends AppCompatActivity {
 
         try {
 
-            SQLiteDatabase sqLiteDatabase = this.openOrCreateDatabase("Events", MODE_PRIVATE, null);
-            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS events (name VARCHAR, year INT(4))");
-            sqLiteDatabase.execSQL("INSERT INTO events (name, year) VALUES('Milenium', 2000)");
-            sqLiteDatabase.execSQL("INSERT INTO events (name, year) VALUES('Nick started teaching', 2014)");
+            SQLiteDatabase sqLiteDatabase = this.openOrCreateDatabase("Users", MODE_PRIVATE, null);
+            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS theNewUsers (name VARCHAR, age INT(3), id INTEGER PRIMARY KEY)");
+//            sqLiteDatabase.execSQL("INSERT INTO theNewUsers (name, age) VALUES('Nick', 23)");
+//            sqLiteDatabase.execSQL("INSERT INTO theNewUsers (name, age) VALUES('Nick', 43)");
+//            sqLiteDatabase.execSQL("INSERT INTO theNewUsers (name, age) VALUES('Dave', 14)");
 
-            Cursor c = sqLiteDatabase.rawQuery("SELECT * FROM events", null);
+            sqLiteDatabase.execSQL("DELETE FROM theNewUsers WHERE id = 2");
+
+            Cursor c = sqLiteDatabase.rawQuery("SELECT * FROM theNewUsers", null);
 
             int nameIndex = c.getColumnIndex("name");
-            int yearIndex = c.getColumnIndex("year");
+            int ageIndex = c.getColumnIndex("age");
+            int idIndex = c.getColumnIndex("id");
             c.moveToFirst();
 
             while (c != null){
-                Log.i("Results - name", c.getString(nameIndex));
-                Log.i("Results - year", Integer.toString(c.getInt(yearIndex)));
+                Log.i("UserResults - name", c.getString(nameIndex));
+                Log.i("UserResults - age", Integer.toString(c.getInt(ageIndex)));
+                Log.i("UserResults - id", Integer.toString(c.getInt(idIndex)));
 
                 c.moveToNext();
             }
